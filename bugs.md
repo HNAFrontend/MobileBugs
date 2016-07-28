@@ -53,3 +53,24 @@
 
 ### 方案原理：
 * 移动端的取值异常，君不要着急，先用setTimeout来试试
+
+## 4.iOS & Android下表单控件表现的不一致
+
+### 描述：
+* android & ios & else系统的浏览器下表单的默认样式各不相同
+
+### 原因：
+* 群魔乱舞，各显神通
+
+### 解决方案：
+* 在reset中将表单进行重置和统一
+
+```css
+    input[type=button]{
+        -webkit-appearance:none;
+        outline:none
+    }
+```
+
+### 方案原理：
+* 一统江湖
