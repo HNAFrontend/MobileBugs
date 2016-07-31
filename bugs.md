@@ -74,3 +74,27 @@
 
 ### 方案原理：
 * 一统江湖
+
+## 5.window.innerHeight首次获取总是为0
+
+### 描述：
+* android下把qq浏览器x5内核打包进行webview解析，当渲染页面是通过window.innerHeight获取视口高度时首次总是为0。
+
+### 原因：
+* 未知，待排查
+
+### 解决方案：
+*通过定时器一直获取直到获取到视口的高度为止
+
+```javascript
+    var h = 0;
+    var timer = setInterval(function(){
+        h = window.innerHeight;
+        if(h > 0){
+            clearInterval(timer);
+        }
+    },10);
+```
+
+### 方案原理：
+* 通过多次测试发现，使用window.innerheight并不是获取不到值，只是在首次获取的时候总是为0，那意味着我们是否可以通过轮询的方式获取该值，于是使用定时器的方式来处理，解决了window.innerheight获取失败的问题。
