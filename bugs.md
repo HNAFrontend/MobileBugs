@@ -141,7 +141,8 @@
 
 ### 解决方案：
 *给父级div定义一个class:clearfix名设置相应属性，如下：
-```.clearfix:before,
+```html
+    .clearfix:before,
     .clearfix:after {
        content: " ";
        display: table;
