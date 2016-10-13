@@ -128,7 +128,8 @@
 ### 描述：
 *子元素使用float浮动后，为了让父级元素的排版和宽度正常必须清除浮动才行，有这样一种情形：在一个容器（container）中，有两个浮动的子元素
 
-```<div>
+```html
+<div>
         <div style="float:left;width:45%;"></div>
         <div style="float:right;width:45%;"></div>
 </div>
