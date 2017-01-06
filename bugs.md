@@ -122,3 +122,50 @@
 
 ### 方案原理：
 * 版本的探测太过繁琐且不靠谱儿，所以将日期的处理使用自己的字符串的处理来进行兼容多系统版本。
+
+## 7.Object.assign在一些浏览器中的支持性不太好，导致使用时产生的问题，但其实不算是bug
+### 描述：
+* android部分机器的微信webview中都无法识别Object.assign方法
+
+### 原因：
+* 内置的浏览器内核不支持这个ES6的特性
+
+### 解决方案：
+*对这个系统方法进行兼容处理，自定义的方法暂时只支持2个对象间的浅拷贝
+
+```javascript
+     function assign() {
+            var args = arguments;
+            if(Object.assign){
+                return Object.assign(args);
+            }
+            if(args.length <= 0){
+                return {};
+            }else if(args.length === 1){
+                return args[0];
+            }else{
+                var originObj = args[0];
+                var sourceObj = args[1];
+                function copy(targetData,sourceData) {
+                    for(var i in sourceData){
+                        //如果目标的属性是个空或者数值，则直接整个子树拷贝过去
+                        if(typeof targetData[i] !== 'object'){
+                            targetData[i] = sourceData[i];
+                        }else{
+                            if(typeof sourceData[i] === 'object'){
+                                copy(targetData[i],sourceData[i]);
+                            }else{
+                                targetData[i] = sourceData[i];
+                            }
+                        }
+                    }
+                }
+                copy(originObj,sourceObj);
+                return originObj;
+            }
+        }
+
+```
+
+### 方案原理：
+* 如果系统支持Object.assign对象拷贝方法则使用系统的方法，否则使用自定义的兼容方法
